@@ -217,7 +217,7 @@ function render_sign_in_post() {
   getSession().tempFormData.assertion = assertion;
   getSession().tempFormData.audience = audience;
 
-  _redirOnNotice(pro_accounts.authenticateBrowserIDSignIn(assertion, audience));
+  _redirOnNotice(pro_accounts.authenticatePersonaSignIn(assertion, audience));
   _redirectToPostSigninDestination();
 }
 
