@@ -319,7 +319,7 @@ function requireAdminAccount() {
 }
 
 /*
- * Given a BrowserID assertion and audience, uses the
+ * Given a Persona assertion and audience, uses the
  * verify webservice to validate and extract an email
  * address.
  */
@@ -357,7 +357,7 @@ function verify(assertion, audience) {
         println("Error, malformed JSON, got " + content);
     }
   }
-  throw new Error("BrowserID verification failed.");
+  throw new Error("Persona verification failed.");
 }
 
 /* Every team pad has a duplicate set of user account data...
@@ -421,7 +421,7 @@ function shouldAutoCreateAccount(email, domainId) {
 }
 
 /* returns undefined on success, error string otherwise. */
-function authenticateBrowserIDSignIn(assertion, audience) {
+function authenticatePersonaSignIn(assertion, audience) {
   var email, domainId;
   try {
     email = verify(assertion, audience);
