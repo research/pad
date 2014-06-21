@@ -50,7 +50,10 @@ function serveRobotsTxt(name) {
   response.neverCache();
   response.setContentType('text/plain');
   response.write('User-agent: *\n');
-  if (!isProduction()) {
+  if (isProduction()) {
+    response.write('Allow: /\n');
+  }
+  else {
     response.write('Disallow: /\n');
   }
   response.stop();
