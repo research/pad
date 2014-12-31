@@ -102,26 +102,13 @@ echo "Maximum ram: $MXRAM"
 
 echo "Using config file: ${cfg_file}"
 
-# Swapped CMS for G1GC... old line was:
-# -XX:+UseConcMarkSweepGC
-# now is:
-# -XX:+UseG1GC
-# Main benefit is G1GC is compacting, CMS is not.
-# Should reduce fragmentation, and hopefully crashing due to the
-# eventual inability to find a large enough free blob to allocate to
-# requires Java 7
-# EDIT: can't use Java 7, seems to break CAPTCHA library... reverting :(
-
 exec $JAVA -classpath $CP \
     -server \
     -Xmx${MXRAM} \
     -Xms${MXRAM} \
-    -XX:NewRatio=2 \
-    -XX:MaxPermSize=${MAXPERM} \
     -Djava.awt.headless=true \
     -XX:MaxGCPauseMillis=500 \
-    -XX:+UseConcMarkSweepGC \
-    -XX:+CMSClassUnloadingEnabled \
+    -XX:+UseG1GC \
     -XX:+PrintGCDetails \
     -XX:+PrintGCTimeStamps \
     -XX:+PrintGCDateStamps \
