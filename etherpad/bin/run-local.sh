@@ -37,7 +37,7 @@ if [ -x "/usr/bin/perl" ]; then
 			{ $cached = $1/1024 };
 
 		END {
-			$usable_free = ($free + $buffers + $cached)/1.25;
+			$usable_free = ($free + $buffers + $cached)/1.2;
 			$usable_free = 100 if ($usable_free < 100);
 			$usable_free = 20480 if ($usable_free > 20480);
 			print int($usable_free)."M\n"
