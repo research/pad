@@ -50,7 +50,8 @@ function getSessionId(cookieName, createIfNotPresent, domain) {
       name: cookieName,
       value: sessionId,
       path: "/",
-      domain: (domain || undefined)
+      domain: (domain || undefined),
+      secure: true
     });
 
     appjet.requestCache.sessionId = sessionId;

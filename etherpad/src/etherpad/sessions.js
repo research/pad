@@ -127,7 +127,8 @@ function setTrackingCookie() {
     value: trackingVal,
     path: "/",
     domain: _getScopedDomain(),
-    expires: expires
+    expires: expires,
+    secure: true
   });
 }
 
