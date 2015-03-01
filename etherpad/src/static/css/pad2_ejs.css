@@ -159,10 +159,10 @@ a#hidetopmsg { position: absolute; right: 5px; bottom: 5px; }
 .docbar-public .docbarpadtitle { padding-left: 22px;
   background: url(/static/img/jun09/pad/public.gif) no-repeat left center; }
   
-.docbarrenamelink { position: absolute; top: 6px;
+#docbarrenamelink { position: absolute; top: 6px;
   font-size: 1.1em; display: none; }
-.docbarrenamelink a { color: #999; }
-.docbarrenamelink a:hover { color: #48d; }
+#docbarrenamelink a { color: #999; }
+#docbarrenamelink a:hover { color: #48d; }
 #padtitlebuttons { position: absolute; width: 74px; zoom: 1;
   height: 17px; top: 4px; left: 170px; display: none;
   background: url(/static/img/jun09/pad/ok_or_cancel.gif) 0px 0px; }
