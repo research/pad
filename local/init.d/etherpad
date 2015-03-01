@@ -2,19 +2,13 @@
 
 ### BEGIN INIT INFO
 # Provides:          etherpad
-# Required-Start:    $networking $syslog $remote_fs
-# Required-Stop:     $networking $syslog $remote_fs
+# Required-Start:    $local_fs $network $syslog $mysql
+# Required-Stop:     $local_fs $network $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: Run Etherpad
 # Description:       A web-based word processor that allows
 #                    people to work together in real-time.
-#                    .
-#                    When multiple people edit the same document simultaneously,
-#                    any changes are instantly reflected on everyone's screen.
-#                    The result is a new and productive way to collaborate on
-#                    text documents, useful for meeting notes, drafting
-#                    sessions, education, team programming, and more.
 ### END INIT INFO
 
 # Author: penSec.IT UG (haftungsbeschränkt) <mail@pensec.it>
@@ -45,8 +39,8 @@
 
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
-DESC="Collaborative real-time editor"
-NAME="etherpad"
+DESC=etherpad
+NAME=etherpad
 DAEMON_BASE="/home/etherpad/pad"
 DAEMON=$DAEMON_BASE/bin/run.sh
 DAEMON_ARGS=""
