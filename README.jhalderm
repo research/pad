@@ -1,0 +1,17 @@
+Notes on building under Ubuntu 14.04
+----------------------------------------
+
+Install necessary packages:
+
+$ sudo apt-get install mysql-client mysql-server scala openjdk-6-jdk libmysql-java
+
+Create empty database and grant permissions:
+
+$ mysql -p
+mysql> CREATE DATABASE etherpad;
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'etherpad'@'localhost' IDENTIFIED BY 'some_password_here'
+mysql> quit
+u
+Create user account for etherpad:
+
+$ sudo adduser --system --group --no-create-home etherpad
