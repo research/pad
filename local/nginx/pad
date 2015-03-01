@@ -1,0 +1,34 @@
+# The primary domain requires authentication, except for /?setCookie= requests.
+server {
+    server_name pad.jhalderm.com;
+    include ssl_params;
+    include proxy_params;
+    location / {
+        if ($args ~ "^setCookie=") {
+            rewrite ^.*$ /setCookie last;
+        }
+        auth_basic "Restricted";
+        auth_basic_user_file "htpasswd";
+        proxy_pass http://localhost:9000/;
+    }           
+    location = /setCookie {
+        internal;
+        proxy_pass http://localhost:9000/;
+    }
+}
+
+# Subdomains
+server {
+    server_name *.pad.jhalderm.com;
+    include ssl_params;
+    include proxy_params;
+    location / {
+        proxy_pass http://localhost:9000/;
+    }
+}
+
+# Redirect everything to HTTPS
+server {
+    listen 80;
+    return 301 https://$host$request_uri;
+}
