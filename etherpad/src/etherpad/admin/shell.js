@@ -49,7 +49,7 @@ function getResult(cmd) {
   var resultString = (function() {
     try {
       var parts = _splitCommand(cmd);
-      result = execution.fancyAssEval(parts[0], parts[1]);
+      result = "" // Might not be a good idea...: execution.fancyAssEval(parts[0], parts[1]);
     } catch (e) {
       // if (e instanceof JavaException) {
       //   e = new net.appjet.bodylock.JSRuntimeException(e.getMessage(), e.javaException);
