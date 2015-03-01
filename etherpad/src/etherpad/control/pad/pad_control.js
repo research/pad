@@ -414,6 +414,71 @@ function render_create_post() {
 // saverevision
 //----------------------------------------------------------------
 
+// Begin JAH 2011/7
+
+// Each time someone clicks the Save Revision button, this code
+// exports the Pad to a textfile on the server.
+
+import("etherpad.pad.exporthtml");
+jimport("java.io.File",
+	"java.io.FileOutputStream");
+
+function _sanitizeFilename(dirty)
+{
+    // Defensively written and paranoid.  Data from the input string
+    // is never directly copied to the output string.  Each character
+    // is tested for membership in a whitelist; if there's a purposed
+    // match, that element of the whitelist is appended to the output.
+    // If the final output is empty or does not match the input, the
+    // function throws an exception.
+
+    var safe = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-";
+
+    var oked = [];
+    for (var c in dirty.split("")) {
+	var n = safe.indexOf(dirty[c]);
+	if (0 < n) {
+	    oked.push(safe[n]);
+	}
+    }
+
+    var clean = oked.join("");
+    if ((0 < clean.length) && (dirty == clean)) {
+	return clean;
+    }
+    throw new Error();
+}
+
+function _exportRevisionLocal(pad, padId, revNum)
+{
+    if (!appjet.config['saveDir'] || !pro_utils.isProDomainRequest()) {
+	return;
+    }
+    if (revNum == undefined || !pad.exists()) {
+	return;
+    }
+    var output = (new java.lang.String(exporthtml.getPadPlainText(pad, revNum))).getBytes("UTF-8");
+
+    var subdomain = pro_utils.getProRequestSubdomain();
+    var pathname = appjet.config['saveDir'] + "/" + _sanitizeFilename(subdomain);
+    var path = new Packages.java.io.File(pathname);
+    if (!path.isDirectory()) {
+	path.mkdir();
+    }
+
+    var filename = pathname + "/" + _sanitizeFilename(padId) + "." + String(revNum);
+    var fos = new Packages.java.io.FileOutputStream(filename, false);
+    fos.write(output);
+    fos.close();
+}
+
+// Multipurpose hook
+function _onSavedRevision(pad, padId, revNum) {
+    _exportRevisionLocal(pad, padId, revNum);
+}
+// END
+
+
 function render_saverevision_post() {
   var padId = request.params.padId;
   var savedBy = request.params.savedBy;
@@ -428,6 +493,7 @@ function render_saverevision_post() {
     }
     var savedRev = revisions.saveNewRevision(pad, savedBy, savedById,
                                              revNum);
+    _onSavedRevision(pad, padId, savedRev.revNum);
     readonly_server.broadcastNewRevision(pad, savedRev);
     response.setContentType('text/x-json');
     response.write(fastJSON.stringify(revisions.getRevisionList(pad)));
