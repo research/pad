@@ -273,10 +273,8 @@ function checkHost() {
     return;
   }
 
-  // redirect to main site
-  var newurl = "http://etherpad.org"+request.path;
-  if (request.query) { newurl += "?"+request.query; }
-  response.redirect(newurl);
+  // display an error
+  render404();
 }
 
 //----------------------------------------------------------------
