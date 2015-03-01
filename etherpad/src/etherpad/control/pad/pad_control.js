@@ -58,7 +58,7 @@ import("dispatch.{Dispatcher,PrefixMatcher,DirMatcher,forward}");
 
 jimport("java.lang.System.out.println");
 
-var DISABLE_PAD_CREATION = true;
+var DISABLE_PAD_CREATION = false;
 
 function onStartup() {
   sqlbase.createJSONTable("PAD_DIAGNOSTIC");
