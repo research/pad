@@ -24,7 +24,6 @@
 
 ETHERPADDIR="$(cd "$(dirname "$0")/.."; pwd)"
 source "$ETHERPADDIR/bin/exports.sh"
-source "$ETHERPADDIR/bin/ooffice.sh"
 
 PID_FILE="${ETHERPADDIR}/etherpad/data/etherpad.pid"
 echo $$ > $PID_FILE
@@ -32,4 +31,4 @@ echo $$ > $PID_FILE
 cd "$ETHERPADDIR/etherpad"
 
 # the argument here is the maximum amount of RAM to allocate
-exec bin/run-local.sh --etherpad.soffice="$SOFFICE_BIN" "$@" 256M
+exec bin/run-local.sh "$@" 256M

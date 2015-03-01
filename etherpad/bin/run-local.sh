@@ -87,9 +87,9 @@ if [[ $(uname -s) == CYGWIN* ]]; then
 fi
 
 # etherpad properties file
-cfg_file=./etc/etherpad.local.properties
+cfg_file=/etc/etherpad/etherpad.local.properties
 if [ ! -f $cfg_file ]; then
-  cfg_file=./etc/etherpad.localdev-default.properties
+  cfg_file=./etc/etherpad.localdev.properties
 fi
 if [[ $1 == "--cfg" ]]; then
   cfg_file=${2}
