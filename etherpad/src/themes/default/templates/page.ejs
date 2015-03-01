@@ -49,15 +49,9 @@ limitations under the License. */ %>
 
 	  <a href="/" class="topbarBrand"><%= appjet.config.customBrandingName %></a>
         <% /* Replace above with an image if you want */ %>
-
-            <% if (appjet.config.showLinkandLicense == "true") { 
-		//if (isloggedin == "true") {
-		// This bit needs doing
-		%>
-	  <a href="http://etherpad.org" class="EtherpadLink">Etherpad is</a> <a href="/static/LICENSE" class="Licensing">free software</a>
-	    <% 
-	// } 
-	} %>
+	    <% if (isProAccountHolder) { %>
+	  <a href="/" class="EtherpadLink">&laquo; Return to menu</a>
+            <% } %>
 	<div class="fullscreen" onclick="$('body').toggleClass('maximized');">Full screen</div>
 
 	  <a href="javascript:void(0);" onclick="$('body').toggleClass('maximized');" class="topbarmaximize" title="Toggle maximization"></a>
