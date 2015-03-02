@@ -1,0 +1,11 @@
+#include <tunables/global>
+
+/var/ethertex/sandbox/** {
+  #include <abstractions/base>
+  /usr/share/texlive/** r,
+  /etc/texmf/** r,
+  /usr/share/local/texmf/** r,
+  /var/lib/texmf/** r,
+  owner /var/ethertex/data/*/** w,
+  /var/ethertex/data/*/** r,
+}
