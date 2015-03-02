@@ -1,17 +1,95 @@
-Notes on building under Ubuntu 14.04
-----------------------------------------
+Installing Etherpad on 14.04
+JAH 2015-03-01
 
-Install necessary packages:
+Mozilla is still maintaing Etherpad.  Thank you Mozilla!
 
-$ sudo apt-get install mysql-client mysql-server scala openjdk-6-jdk libmysql-java
+Our local changes are here: https://github.com/research/pad/tree/ethertex
 
-Create empty database and grant permissions:
+** Install necessary packages:
+
+$ sudo apt-get install git mysql-client mysql-server scala openjdk-6-jdk libmysql-java
+
+[note: mysql root password is pw(etherpad-mysql)]
+
+** Create empty database and grant permissions:
 
 $ mysql -p
 mysql> CREATE DATABASE etherpad;
 mysql> GRANT ALL PRIVILEGES ON *.* TO 'etherpad'@'localhost' IDENTIFIED BY 'some_password_here'
 mysql> quit
-u
-Create user account for etherpad:
+
+** Clone our etherpad repo:
 
 $ sudo adduser --system --group --no-create-home etherpad
+$ sudo mkdir /home/etherpad
+$ sudo chown jhalderm:etherpad /home/etherpad
+$ cd /home/etherpad
+$ git clone -b ethertex https://github.com/research/pad.git
+
+** Build Etherpad and install init scripts:
+
+$ cd /home/etherpad/pad/
+$ bin/build.sh
+(expect some deprecation warnings, a complaint about ConfigParam, etc.)
+
+# mkdir /var/log/etherpad
+# chown etherpad:etherpad /var/log/etherpad
+# mkdir /etc/etherpad
+# chown root:etherpad /etc/etherpad
+# chmod 750 /etc/etherpad
+Copy $git/local/etherpad.local.properties to /etc/etherpad/ and set admin_password and mysql_password.
+
+# cp /home/etherpad/pad/local/init.d/etherpad /etc/init.d/
+# update-rc.d etherpad defaults
+# service etherpad start
+
+** Set up the web server:
+
+# apt-get install nginx
+# cd /etc/nginx
+# ln -s /home/etherpad/pad/local/nginx/proxy_params proxy_params
+# ln -s /home/etherpad/pad/local/nginx/ssl_params ssl_params
+# ln -s /home/etherpad/pad/local/nginx/pad sites-enabled/pad
+
+# mkdir /etc/nginx/ssl
+# chmod 700 /etc/nginx/ssl
+
+Put SSL keys/certs in /etc/nginx/ssl
+Create /etc/nginx/htpasswd
+
+** Set up Ethertex build backend and data paths
+
+# mkdir /var/ethertex
+# mkdir /var/ethertex/data
+# chown root:root /var/ethertex
+# chown etherpad:etherpad /var/ethertex/data
+# ln -s /home/etherpad/pad/ethertex/build2.sh /var/ethertex/build2.sh
+# ln -s /home/etherpad/pad/ethertex/ethertex2.py /var/ethertex/ethertex2.py
+# ln -s /home/etherpad/pad/ethertex/texfilter.py /var/ethertex/texfilter.py
+
+# mkdir /var/etherpad
+# mkdir /var/etherpad/latest
+# mkdir /var/etherpad/appjet
+# mkdir /var/etherpad/appjet/sessions
+# chown root:root /var/etherpad
+# chown etherpad:etherpad /var/etherpad/latest
+# chown etherpad:etherpad /var/etherpad/appjet
+# chown etherpad:etherpad /var/etherpad/appjet/sessions
+
+** Set up Texlive and Apparmor: (this takes about 4 GB)
+
+# apt-get install texlive-full
+# texconfig rehash
+# mkdir /var/ethertex/sandbox
+# chown root:root /var/ethertex/sandbox
+# cp /usr/bin/pdflatex /var/ethertex/sandbox/
+# cp /usr/bin/bibtex /var/ethertex/sandbox/
+
+# cp /home/etherpad/pad/local/apparmor.d/ethertex-sandbox /etc/apparmor.d/
+# service apparmor restart
+
+** Copy over old data
+
+Mysqldump and restore the database "etherpad"
+
+Done!
