@@ -10,4 +10,4 @@ ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA
 ssl_prefer_server_ciphers on;
 
 # Enable this if your want HSTS (recommended)
-#add_header Strict-Transport-Security max-age=15768000;
+add_header Strict-Transport-Security max-age=15768000;
