@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PDFLATEX=/usr/local/texlive/2009/bin/x86_64-linux/pdflatex
-BIBTEX=/usr/local/texlive/2009/bin/x86_64-linux/bibtex
+PDFLATEX=/var/ethertex/sandbox/pdflatex
+BIBTEX=/var/ethertex/sandbox/bibtex
 # (Note: AppArmor should restrict these processes to /var/ethertex/data/*/**)
 
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin

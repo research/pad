@@ -103,7 +103,7 @@ class CachingImporter(object):
         f.close()
 
 def isPadUrl(url):
-    if re.match("^https://[a-zA-Z0-9\-]+\.pad\.jhalderm\.com/[a-zA-Z0-9\._\-]+$", url):
+    if re.match("^https://[a-zA-Z0-9\-]+\.pad2\.jhalderm\.com/[a-zA-Z0-9\._\-]+$", url):
         return True
     return False
 
@@ -194,7 +194,8 @@ def main():
     try:
         # This sets urllib to use the client's session cookie, which is
         # passed in to the script from the EtherPad plugin:
-        cj.set_cookie(cookielib.Cookie(version=0, name='ES', value=sys.argv[5], port=None, port_specified=False, domain=sys.argv[4], domain_specified=True, domain_initial_dot=True, path='/', path_specified=True, secure=True, expires=None, discard=True, comment=None, comment_url=None, rest={}, rfc2109=False))
+        cookie_path = "." + ".".join(sys.argv[4].split(".")[2:])
+        cj.set_cookie(cookielib.Cookie(version=0, name='ES', value=sys.argv[5], port=None, port_specified=False, domain=cookie_path, domain_specified=True, domain_initial_dot=True, path='/', path_specified=True, secure=True, expires=None, discard=True, comment=None, comment_url=None, rest={}, rfc2109=False))
         Processor().process(deque([(sys.argv[3],sys.argv[2])]))
     except NameError as err:
         print "<div class=exception><h3>Name error</h3>",
