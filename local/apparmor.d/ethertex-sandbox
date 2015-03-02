@@ -3,10 +3,11 @@
 /var/ethertex/sandbox/** {
   #include <abstractions/base>
   /usr/share/texlive/** r,
+  /usr/share/texmf/** r,
   /etc/texmf/** r,
   /usr/local/share/texmf/** r,
   /var/lib/texmf/** r,
-  /usr/share/poppler/**	r,
+  /usr/share/poppler/** r,
   owner /var/ethertex/data/*/** w,
   /var/ethertex/data/*/** r,
 }
