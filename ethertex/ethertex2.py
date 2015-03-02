@@ -103,7 +103,7 @@ class CachingImporter(object):
         f.close()
 
 def isPadUrl(url):
-    if re.match("^https://[a-zA-Z0-9\-]+\.pad2\.jhalderm\.com/[a-zA-Z0-9\._\-]+$", url):
+    if re.match("^https://[a-zA-Z0-9\-]+\.pad\.jhalderm\.com/[a-zA-Z0-9\._\-]+$", url):
         return True
     return False
 
