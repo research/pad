@@ -4,8 +4,9 @@
   #include <abstractions/base>
   /usr/share/texlive/** r,
   /etc/texmf/** r,
-  /usr/share/local/texmf/** r,
+  /usr/local/share/texmf/** r,
   /var/lib/texmf/** r,
+  /usr/share/poppler/**	r,
   owner /var/ethertex/data/*/** w,
   /var/ethertex/data/*/** r,
 }
